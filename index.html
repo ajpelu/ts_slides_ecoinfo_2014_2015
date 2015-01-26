@@ -155,7 +155,7 @@ img {
   <article data-timings="">
     <p><strong>Explicar la evolución de un fenómeno a lo largo del tiempo</strong> </p>
 
-<p><img src="figure/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+<p><img src="assets/fig/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -168,7 +168,7 @@ img {
   <article data-timings="">
     <p><strong>Predecir su valores en el futuro</strong></p>
 
-<p><img src="figure/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
+<p><img src="assets/fig/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
 
   </article>
   <!-- Presenter Notes -->
@@ -190,7 +190,7 @@ img {
     <h2>Estacionarias</h2>
   </hgroup>
   <article data-timings="">
-    <p><img src="figure/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </p>
+    <p><img src="assets/fig/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </p>
 
 <ul class = "build incremental">
 <li>Los datos varían todo el tiempo alrededor del mismo <strong>valor medio</strong> y con la <strong>misma variabilidad</strong>. </li>
@@ -209,7 +209,7 @@ sólo depende del número de observaciones que distan entre ambas</li>
     <h2>No Estacionarias</h2>
   </hgroup>
   <article data-timings="">
-    <p><img src="figure/unnamed-chunk-4.png" alt="plot of chunk unnamed-chunk-4"> </p>
+    <p><img src="assets/fig/unnamed-chunk-4.png" alt="plot of chunk unnamed-chunk-4"> </p>
 
 <ul class = "build incremental">
 <li>La media, la varianza y/o la relación entre distantes equiespaciados <strong>cambian</strong> a lo largo del tiempo. </li>
@@ -225,7 +225,7 @@ sólo depende del número de observaciones que distan entre ambas</li>
     <h2>No Estacionarias</h2>
   </hgroup>
   <article data-timings="">
-    <p><img src="figure/unnamed-chunk-5.png" alt="plot of chunk unnamed-chunk-5"> </p>
+    <p><img src="assets/fig/unnamed-chunk-5.png" alt="plot of chunk unnamed-chunk-5"> </p>
 
 <ul class = "build incremental">
 <li>Tendencia (serie no estacionaria estacional con tendencia)</li>
@@ -240,7 +240,7 @@ sólo depende del número de observaciones que distan entre ambas</li>
     <h2>No Estacionarias</h2>
   </hgroup>
   <article data-timings="">
-    <p><img src="figure/unnamed-chunk-6.png" alt="plot of chunk unnamed-chunk-6"> </p>
+    <p><img src="assets/fig/unnamed-chunk-6.png" alt="plot of chunk unnamed-chunk-6"> </p>
 
 <ul class = "build incremental">
 <li>Aumenta la variabilidad con el tiempo (serie no estacionaria con aumento de variabilidad)</li>
@@ -297,26 +297,53 @@ Falk M (2012). A First Course on Time Series Analysis - Examples with SAS. Chair
 
 <p>Supongamos que tenemos un conjunto de observaciones de dos variable aleatorias, <strong><em>X</em></strong> e <strong><em>Y</em></strong>: 
 \((x_1,y_1),(x_2,y_2),\hdots,(x_n,y_n)\)
-Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordantes si los rangos de ambos elementos ...</p>
+Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordantes si los rangos de ambos elementos concuerdan:</p>
+
+<ul>
+<li>\(x_i > x_j\) y \(y_i > y_j\) o</li>
+<li>\(x_i < x_j\) y \(y_i < y_j\) 
+Decimos que un par de observaciones son discordantes si: </li>
+<li>\(x_i > x_j\) y \(y_i < y_j\) o</li>
+<li>\(x_i < x_j\) y \(y_i > y_j\) </li>
+</ul>
+
+<p>El valor del estadístico \(\tau\) lo calculamos como:
+\(\tau=\frac{(\textup{n pares concordantes})-(\textup{n pares discordantes})}{\frac{1}{2}n(n-1)}\) </p>
+
+<p>Resultados</p>
+
+<ul>
+<li>If the agreement between the two rankings is perfect (i.e., the two rankings are the same) the coefficient has value 1.
+If the disagreement between the two rankings is perfect (i.e., one ranking is the reverse of the other) the coefficient has value −1.
+If X and Y are independent, then we would expect the coefficient to be approximately zero.</li>
+</ul>
 
 <p>Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint random variables X and Y respectively, such that all the values of (xi) and (yi) are unique. Any pair of observations (xi, yi) and (xj, yj) are said to be concordant if the ranks for both elements agree: that is, if both xi &gt; xj and yi &gt; yj or if both xi &lt; xj and yi &lt; yj. They are said to be discordant, if xi &gt; xj and yi &lt; yj or if xi &lt; xj and yi &gt; yj. If xi = xj or yi = yj, the pair is neither concordant nor discordant.</p>
+
+<p>El test de Mann Kendall es un test estadístico ampliamente utilizado para el análisis de tendencias en series de datos temporales que se ha utilizdo ampliamente en climatología e hidrología. </p>
+
+<p>Existen varias ventajas: </p>
+
+<ul>
+<li>Es un test no paramétrico (no requiere que asumamos distribuciones en los datos)</li>
+<li>Tiene una baja sensibilidad para cambios abruotos </li>
+</ul>
+
+<p>Mann Kendall test is a statistical test widely used for the analysis of trend in climatologic
+[9] and in hydrologic time series [6]. There are two advantages of using this test. First, it
+is a non parametric test and does not require the data to be normally distributed. Second,
+the test has low sensitivity to abrupt breaks due to inhomogeneous time series [4]. Any
+data reported as non-detects are included by assigning them a common value that is
+smaller than the smallest measured value in the data set [7]. According to this test, the
+null hypothesis H0 assumes that there is no trend (the data is independent and randomly
+ordered) and this is tested against the alternative hypothesis H1, which assumes that there
+is a trend. [3]</p>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-17" style="background:;">
-  <hgroup>
-    <h1>Crisis de Reproducibilidad</h1>
-  </hgroup>
-  <article data-timings="">
-    <p><img src="images/the_economist.jpg" alt="fraude ciencia"></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-18" style="background:;">
   <hgroup>
     <h1>Fraude científico</h1>
   </hgroup>
@@ -335,7 +362,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-19" style="background:;">
+<slide class="" id="slide-18" style="background:;">
   <hgroup>
     <h1>Retracción</h1>
   </hgroup>
@@ -355,7 +382,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="quote smaller" id="slide-20" style="background:;">
+<slide class="quote smaller" id="slide-19" style="background:;">
   <article data-timings="">
     <p align="center"><img src="images/metadata_michener.png" height="500" width="742"></p>
 
@@ -367,7 +394,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-21" style="background:;">
+<slide class="" id="slide-20" style="background:;">
   <hgroup>
     <h1>Meta-analysis on the effects of temperature on plant phenology</h1>
   </hgroup>
@@ -380,7 +407,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="quote" id="slide-22" style="background:;">
+<slide class="quote" id="slide-21" style="background:;">
   <article data-timings="">
     <p><br>
 <br>
@@ -391,7 +418,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="quote" id="slide-23" style="background:;">
+<slide class="quote" id="slide-22" style="background:;">
   <article data-timings="">
     <p><br>
 <br>
@@ -401,51 +428,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="smaller" id="slide-24" style="background:;">
-  <article data-timings="">
-    <p><br>
-<br>
-<br>
-<img src="images/repro_spectrum.jpg" alt="repro_spectrum"> </p>
-
-<p><a href="https://dx.doi.org/10.1126/science.1213847">Peng 2011</a></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="quote" id="slide-25" style="background:;">
-  <article data-timings="">
-    <p><br>
-<br>
-<br>
-<q align=right>¿Porqué ha de ser <br><strong>reproducible</strong><br> la investigación? </q></p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-26" style="background:;">
-  <hgroup>
-    <h2>Por la <em>ciencia</em></h2>
-  </hgroup>
-  <article data-timings="">
-    <ul>
-<li><strong>Estándar</strong>
-
-<ul>
-<li>Los resultados de una investigación no pueden considerarse &quot;contribuciones genuinas&quot; al conocimiento humano hasta que no sean verificadas (<a href="http://dx.doi.org/10.1109/MCSE.2009.19">Stodden 2009</a>).</li>
-<li>Demarcación entre ciencia y no-ciencia</li>
-</ul></li>
-</ul>
-
-<p><img src="images/ciencia_magos.jpg" alt="repro_spectrum"> </p>
-
-  </article>
-  <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-27" style="background:;">
+<slide class="" id="slide-23" style="background:;">
   <hgroup>
     <h2>Por la <em>ciencia</em></h2>
   </hgroup>
@@ -465,7 +448,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-28" style="background:;">
+<slide class="" id="slide-24" style="background:;">
   <hgroup>
     <h2>Por los <em>investigadores</em>  (por ti)</h2>
   </hgroup>
@@ -499,7 +482,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="smaller" id="slide-29" style="background:;">
+<slide class="smaller" id="slide-25" style="background:;">
   <article data-timings="">
     <p><strong>Aplicar técnicas de reproducibilidad (o al menos los principios) puede hacer que tu investigación sea mas efectiva y mas fácil</strong>
 <br>
@@ -511,7 +494,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="quote" id="slide-30" style="background:;">
+<slide class="quote" id="slide-26" style="background:;">
   <article data-timings="">
     <p><br>
 <br>
@@ -522,7 +505,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-31" style="background:;">
+<slide class="" id="slide-27" style="background:;">
   <hgroup>
     <h2>Flujo de Trabajo Científico</h2>
   </hgroup>
@@ -535,7 +518,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-32" style="background:;">
+<slide class="" id="slide-28" style="background:;">
   <hgroup>
     <h2>Comunicamos los resultados</h2>
   </hgroup>
@@ -566,7 +549,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="quote" id="slide-33" style="background:;">
+<slide class="quote" id="slide-29" style="background:;">
   <article data-timings="">
     <p>Este flujo de trabajo está <strong>roto</strong> </p>
 
@@ -578,7 +561,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="quote" id="slide-34" style="background:;">
+<slide class="quote" id="slide-30" style="background:;">
   <hgroup>
     <h2>Consejos prácticos</h2>
   </hgroup>
@@ -594,7 +577,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-35" style="background:;">
+<slide class="" id="slide-31" style="background:;">
   <hgroup>
     <h2>The big picture</h2>
   </hgroup>
@@ -605,7 +588,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-36" style="background:;">
+<slide class="" id="slide-32" style="background:;">
   <hgroup>
     <h3>Algunas reglas sencillas (<a href="https://dx.doi.org/10.1371/journal.pcbi.1003285">Sandve et al. 2013</a>)</h3>
   </hgroup>
@@ -629,7 +612,7 @@ Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordant
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont centrepre bigger" id="slide-37" style="background:;">
+<slide class="codefont centrepre bigger" id="slide-33" style="background:;">
   <article data-timings="">
     <p><strong><code>Rule 3.</code></strong> <strong>Archive the exact versions of all external programs used</strong> </p>
 
@@ -656,7 +639,7 @@ Dependencies</a></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont centrepre bigger" id="slide-38" style="background:;">
+<slide class="codefont centrepre bigger" id="slide-34" style="background:;">
   <article data-timings="">
     <p><strong><code>Rule 4.</code></strong> <strong>Version Control all custom scripts</strong> </p>
 
@@ -681,7 +664,7 @@ Dependencies</a></p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont bigger centrepre" id="slide-39" style="background:;">
+<slide class="codefont bigger centrepre" id="slide-35" style="background:;">
   <article data-timings="">
     <p><strong><code>Rule 6.</code></strong> <strong>For analysis that include randomness, note underlying random seeds</strong></p>
 
@@ -690,7 +673,7 @@ Dependencies</a></p>
 </ul>
 
 <pre><code class="r"># Crea un conjunto de datos
-x &lt;- seq(0,30, by=0.5)
+x &lt;- seq(0, 30, by = 0.5)
 head(x)
 </code></pre>
 
@@ -701,20 +684,20 @@ head(x)
 sample(x, 5)
 </code></pre>
 
-<pre><code>## [1]  1.0 18.5 14.5 19.0 21.5
+<pre><code>## [1]  6.5  0.5 13.0  8.0  2.0
 </code></pre>
 
 <pre><code class="r">sample(x, 5)
 </code></pre>
 
-<pre><code>## [1] 20.0 11.0 18.5  4.0 18.0
+<pre><code>## [1]  5.0 29.5 15.5  2.0  7.0
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont bigger centrepre" id="slide-40" style="background:;">
+<slide class="codefont bigger centrepre" id="slide-36" style="background:;">
   <article data-timings="">
     <p><strong><code>Rule 6.</code></strong> <strong>For analysis that include randomness, note underlying random seeds</strong></p>
 
@@ -746,7 +729,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-41" style="background:;">
+<slide class="" id="slide-37" style="background:;">
   <article data-timings="">
     <p><strong><code>Rule 7.</code></strong> <strong>Always store raw dat behind plots</strong> </p>
 
@@ -765,7 +748,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-42" style="background:;">
+<slide class="" id="slide-38" style="background:;">
   <hgroup>
     <h2>Algunos recursos</h2>
   </hgroup>
@@ -781,7 +764,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="quote" id="slide-43" style="background:;">
+<slide class="quote" id="slide-39" style="background:;">
   <article data-timings="">
     <p><br>
 <br>
@@ -792,7 +775,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont centrepre bigger quote" id="slide-44" style="background:;">
+<slide class="codefont centrepre bigger quote" id="slide-40" style="background:;">
   <hgroup>
     <h2>Markdown</h2>
   </hgroup>
@@ -826,7 +809,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-45" style="background:;">
+<slide class="" id="slide-41" style="background:;">
   <hgroup>
     <h2>Ejemplos</h2>
   </hgroup>
@@ -842,7 +825,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="quote" id="slide-46" style="background:;">
+<slide class="quote" id="slide-42" style="background:;">
   <article data-timings="">
     <p><br>
 <br>
@@ -853,7 +836,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-47" style="background:;">
+<slide class="" id="slide-43" style="background:;">
   <article data-timings="">
     <p><img src="images/final_doc.png" alt="final_doc">
 <br>
@@ -863,7 +846,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-48" style="background:;">
+<slide class="" id="slide-44" style="background:;">
   <article data-timings="">
     <p><img src="images/astorytold.png" alt="final_doc">
 <br>
@@ -873,7 +856,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-49" style="background:;">
+<slide class="" id="slide-45" style="background:;">
   <hgroup>
     <h2>¿Qué es el control de versiones?</h2>
   </hgroup>
@@ -895,7 +878,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-50" style="background:;">
+<slide class="" id="slide-46" style="background:;">
   <hgroup>
     <h2>Lenguajes para el control de versiones</h2>
   </hgroup>
@@ -912,7 +895,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-51" style="background:;">
+<slide class="" id="slide-47" style="background:;">
   <hgroup>
     <h2>GitHub</h2>
   </hgroup>
@@ -944,7 +927,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-52" style="background:;">
+<slide class="" id="slide-48" style="background:;">
   <article data-timings="">
     <p><img src="images/github_view.png" alt="github view"></p>
 
@@ -952,7 +935,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-53" style="background:;">
+<slide class="" id="slide-49" style="background:;">
   <article data-timings="">
     <p><img src="images/github_commit_log.png" alt="github log"></p>
 
@@ -960,7 +943,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-54" style="background:;">
+<slide class="" id="slide-50" style="background:;">
   <article data-timings="">
     <p><img src="images/github_example.png" alt="github example"></p>
 
@@ -968,7 +951,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-55" style="background:;">
+<slide class="" id="slide-51" style="background:;">
   <hgroup>
     <h2>Un sencillo tutorial sobre Git</h2>
   </hgroup>
@@ -990,7 +973,7 @@ sample(x, 5)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont centrepre bigger quote" id="slide-56" style="background:;">
+<slide class="codefont centrepre bigger quote" id="slide-52" style="background:;">
   <hgroup>
     <h2>Crear un repositorio nuevo</h2>
   </hgroup>
@@ -1022,7 +1005,7 @@ cd datos
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont centrepre bigger quote" id="slide-57" style="background:;">
+<slide class="codefont centrepre bigger quote" id="slide-53" style="background:;">
   <hgroup>
     <h2>Añadir cambios</h2>
   </hgroup>
@@ -1058,7 +1041,7 @@ cd datos
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont bigger" id="slide-58" style="background:;">
+<slide class="codefont bigger" id="slide-54" style="background:;">
   <hgroup>
     <h2>Registrar cambios</h2>
   </hgroup>
@@ -1078,14 +1061,14 @@ cd datos
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-59" style="background:url(images/esquema_git.png);">
+<slide class="" id="slide-55" style="background:url(images/esquema_git.png);">
   <article data-timings="">
     
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="minicodefont bigger" id="slide-60" style="background:;">
+<slide class="minicodefont bigger" id="slide-56" style="background:;">
   <hgroup>
     <h2>Enviar cambios</h2>
   </hgroup>
@@ -1121,7 +1104,7 @@ cd datos
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-61" style="background:;">
+<slide class="" id="slide-57" style="background:;">
   <hgroup>
     <h2>Reto 4_1</h2>
   </hgroup>
@@ -1135,7 +1118,7 @@ cd datos
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont bigger quote" id="slide-62" style="background:;">
+<slide class="codefont bigger quote" id="slide-58" style="background:;">
   <hgroup>
     <h2>Clonar un directorio</h2>
   </hgroup>
@@ -1161,7 +1144,7 @@ ejemplo:</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="codefont centrepre bigger quote" id="slide-63" style="background:;">
+<slide class="codefont centrepre bigger quote" id="slide-59" style="background:;">
   <hgroup>
     <h2>Actualizar, fusionar</h2>
   </hgroup>
@@ -1180,7 +1163,7 @@ ejemplo:</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-64" style="background:;">
+<slide class="" id="slide-60" style="background:;">
   <hgroup>
     <h2>Reto 4_2</h2>
   </hgroup>
@@ -1194,14 +1177,14 @@ ejemplo:</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-65" style="background:;">
+<slide class="" id="slide-61" style="background:;">
   <article data-timings="">
     
   </article>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="smaller" id="slide-66" style="background:;">
+<slide class="smaller" id="slide-62" style="background:;">
   <hgroup>
     <h1>References and Resources</h1>
   </hgroup>
@@ -1220,7 +1203,7 @@ ejemplo:</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="smaller" id="slide-67" style="background:;">
+<slide class="smaller" id="slide-63" style="background:;">
   <hgroup>
     <h1>References and Resources</h1>
   </hgroup>
@@ -1239,7 +1222,7 @@ ejemplo:</p>
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-68" style="background:;">
+<slide class="" id="slide-64" style="background:;">
   <article data-timings="">
     <p><img src="images/end.png" alt=""></p>
 
@@ -1349,31 +1332,31 @@ ejemplo:</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=17 title='Crisis de Reproducibilidad'>
+        data-slide=17 title='Fraude científico'>
          17
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=18 title='Fraude científico'>
+        data-slide=18 title='Retracción'>
          18
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=19 title='Retracción'>
+        data-slide=19 title=''>
          19
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=20 title=''>
+        data-slide=20 title='Meta-analysis on the effects of temperature on plant phenology'>
          20
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=21 title='Meta-analysis on the effects of temperature on plant phenology'>
+        data-slide=21 title=''>
          21
       </a>
     </li>
@@ -1385,13 +1368,13 @@ ejemplo:</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=23 title=''>
+        data-slide=23 title='Por la <em>ciencia</em>'>
          23
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=24 title=''>
+        data-slide=24 title='Por los <em>investigadores</em>  (por ti)'>
          24
       </a>
     </li>
@@ -1403,19 +1386,19 @@ ejemplo:</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=26 title='Por la <em>ciencia</em>'>
+        data-slide=26 title=''>
          26
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=27 title='Por la <em>ciencia</em>'>
+        data-slide=27 title='Flujo de Trabajo Científico'>
          27
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=28 title='Por los <em>investigadores</em>  (por ti)'>
+        data-slide=28 title='Comunicamos los resultados'>
          28
       </a>
     </li>
@@ -1427,19 +1410,19 @@ ejemplo:</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=30 title=''>
+        data-slide=30 title='Consejos prácticos'>
          30
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=31 title='Flujo de Trabajo Científico'>
+        data-slide=31 title='The big picture'>
          31
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=32 title='Comunicamos los resultados'>
+        data-slide=32 title='Algunas reglas sencillas (<a href="https://dx.doi.org/10.1371/journal.pcbi.1003285">Sandve et al. 2013</a>)'>
          32
       </a>
     </li>
@@ -1451,19 +1434,19 @@ ejemplo:</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=34 title='Consejos prácticos'>
+        data-slide=34 title=''>
          34
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=35 title='The big picture'>
+        data-slide=35 title=''>
          35
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=36 title='Algunas reglas sencillas (<a href="https://dx.doi.org/10.1371/journal.pcbi.1003285">Sandve et al. 2013</a>)'>
+        data-slide=36 title=''>
          36
       </a>
     </li>
@@ -1475,7 +1458,7 @@ ejemplo:</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=38 title=''>
+        data-slide=38 title='Algunos recursos'>
          38
       </a>
     </li>
@@ -1487,19 +1470,19 @@ ejemplo:</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=40 title=''>
+        data-slide=40 title='Markdown'>
          40
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=41 title=''>
+        data-slide=41 title='Ejemplos'>
          41
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=42 title='Algunos recursos'>
+        data-slide=42 title=''>
          42
       </a>
     </li>
@@ -1511,25 +1494,25 @@ ejemplo:</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=44 title='Markdown'>
+        data-slide=44 title=''>
          44
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=45 title='Ejemplos'>
+        data-slide=45 title='¿Qué es el control de versiones?'>
          45
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=46 title=''>
+        data-slide=46 title='Lenguajes para el control de versiones'>
          46
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=47 title=''>
+        data-slide=47 title='GitHub'>
          47
       </a>
     </li>
@@ -1541,122 +1524,98 @@ ejemplo:</p>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=49 title='¿Qué es el control de versiones?'>
+        data-slide=49 title=''>
          49
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=50 title='Lenguajes para el control de versiones'>
+        data-slide=50 title=''>
          50
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=51 title='GitHub'>
+        data-slide=51 title='Un sencillo tutorial sobre Git'>
          51
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=52 title=''>
+        data-slide=52 title='Crear un repositorio nuevo'>
          52
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=53 title=''>
+        data-slide=53 title='Añadir cambios'>
          53
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=54 title=''>
+        data-slide=54 title='Registrar cambios'>
          54
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=55 title='Un sencillo tutorial sobre Git'>
+        data-slide=55 title=''>
          55
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=56 title='Crear un repositorio nuevo'>
+        data-slide=56 title='Enviar cambios'>
          56
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=57 title='Añadir cambios'>
+        data-slide=57 title='Reto 4_1'>
          57
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=58 title='Registrar cambios'>
+        data-slide=58 title='Clonar un directorio'>
          58
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=59 title=''>
+        data-slide=59 title='Actualizar, fusionar'>
          59
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=60 title='Enviar cambios'>
+        data-slide=60 title='Reto 4_2'>
          60
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=61 title='Reto 4_1'>
+        data-slide=61 title=''>
          61
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=62 title='Clonar un directorio'>
+        data-slide=62 title='References and Resources'>
          62
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=63 title='Actualizar, fusionar'>
+        data-slide=63 title='References and Resources'>
          63
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=64 title='Reto 4_2'>
+        data-slide=64 title=''>
          64
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=65 title=''>
-         65
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=66 title='References and Resources'>
-         66
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=67 title='References and Resources'>
-         67
-      </a>
-    </li>
-    <li>
-      <a href="#" target="_self" rel='tooltip' 
-        data-slide=68 title=''>
-         68
       </a>
     </li>
   </ul>

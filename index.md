@@ -78,13 +78,15 @@ img {
 ## Objetivos:
 __Explicar la evolución de un fenómeno a lo largo del tiempo__ 
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1.png) 
+![plot of chunk unnamed-chunk-1](assets/fig/unnamed-chunk-1.png) 
+
 
 --- .quote
 ## Objetivos
 __Predecir su valores en el futuro__
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
+![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2.png) 
+
 
 
 
@@ -97,7 +99,8 @@ __Predecir su valores en el futuro__
 
 --- .quote
 ## Estacionarias 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
+![plot of chunk unnamed-chunk-3](assets/fig/unnamed-chunk-3.png) 
+
 
 
 > * Los datos varían todo el tiempo alrededor del mismo __valor medio__ y con la __misma variabilidad__. 
@@ -108,7 +111,8 @@ sólo depende del número de observaciones que distan entre ambas
 
 --- .quote
 ## No Estacionarias 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
+![plot of chunk unnamed-chunk-4](assets/fig/unnamed-chunk-4.png) 
+
 
 
 > * La media, la varianza y/o la relación entre distantes equiespaciados __cambian__ a lo largo del tiempo. 
@@ -117,13 +121,15 @@ sólo depende del número de observaciones que distan entre ambas
 
 --- .quote
 ## No Estacionarias 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
+![plot of chunk unnamed-chunk-5](assets/fig/unnamed-chunk-5.png) 
+
 
 > * Tendencia (serie no estacionaria estacional con tendencia)
 
 --- 
 ## No Estacionarias  
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6.png) 
+![plot of chunk unnamed-chunk-6](assets/fig/unnamed-chunk-6.png) 
+
 
 > * Aumenta la variabilidad con el tiempo (serie no estacionaria con aumento de variabilidad)
 
@@ -154,12 +160,41 @@ $\tau = 0$ :
  
 Supongamos que tenemos un conjunto de observaciones de dos variable aleatorias, ___X___ e ___Y___: 
 $(x_1,y_1),(x_2,y_2),\hdots,(x_n,y_n)$
-Decimos que un par de observaviones $(x_i,y_i)$ y $(x_j,y_j)$ son concordantes si los rangos de ambos elementos ...
+Decimos que un par de observaviones $(x_i,y_i)$ y $(x_j,y_j)$ son concordantes si los rangos de ambos elementos concuerdan:
+* $x_i > x_j$ y $y_i > y_j$ o
+* $x_i < x_j$ y $y_i < y_j$ 
+Decimos que un par de observaciones son discordantes si: 
+* $x_i > x_j$ y $y_i < y_j$ o
+* $x_i < x_j$ y $y_i > y_j$ 
+
+El valor del estadístico $\tau$ lo calculamos como:
+$\tau=\frac{(\textup{n pares concordantes})-(\textup{n pares discordantes})}{\frac{1}{2}n(n-1)}$ 
+
+Resultados
+* If the agreement between the two rankings is perfect (i.e., the two rankings are the same) the coefficient has value 1.
+If the disagreement between the two rankings is perfect (i.e., one ranking is the reverse of the other) the coefficient has value −1.
+If X and Y are independent, then we would expect the coefficient to be approximately zero.
+
 
 
 Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint random variables X and Y respectively, such that all the values of (xi) and (yi) are unique. Any pair of observations (xi, yi) and (xj, yj) are said to be concordant if the ranks for both elements agree: that is, if both xi > xj and yi > yj or if both xi < xj and yi < yj. They are said to be discordant, if xi > xj and yi < yj or if xi < xj and yi > yj. If xi = xj or yi = yj, the pair is neither concordant nor discordant.
 
 
+El test de Mann Kendall es un test estadístico ampliamente utilizado para el análisis de tendencias en series de datos temporales que se ha utilizdo ampliamente en climatología e hidrología. 
+
+Existen varias ventajas: 
+* Es un test no paramétrico (no requiere que asumamos distribuciones en los datos)
+* Tiene una baja sensibilidad para cambios abruotos 
+
+Mann Kendall test is a statistical test widely used for the analysis of trend in climatologic
+[9] and in hydrologic time series [6]. There are two advantages of using this test. First, it
+is a non parametric test and does not require the data to be normally distributed. Second,
+the test has low sensitivity to abrupt breaks due to inhomogeneous time series [4]. Any
+data reported as non-detects are included by assigning them a common value that is
+smaller than the smallest measured value in the data set [7]. According to this test, the
+null hypothesis H0 assumes that there is no trend (the data is independent and randomly
+ordered) and this is tested against the alternative hypothesis H1, which assumes that there
+is a trend. [3]
 
 
 
@@ -169,10 +204,6 @@ Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint rand
 
 
 
-
---- 
-# Crisis de Reproducibilidad
-![fraude ciencia](images/the_economist.jpg)
 
 --- &twocol
 # Fraude científico
@@ -218,29 +249,6 @@ Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint rand
 <br>
 <br>
 <q> Research results are __replicable__ if there is sufficient information available for independent researchers to make the same findings using the same procedures </q>  
-
---- .smaller
-<br>
-<br>
-<br>
-![repro_spectrum](images/repro_spectrum.jpg) 
-
-[Peng 2011](https://dx.doi.org/10.1126/science.1213847)
-
---- .quote
-<br>
-<br>
-<br>
-<q align=right>¿Porqué ha de ser <br>__reproducible__<br> la investigación? </q>
-
---- 
-## Por la _ciencia_ 
-* __Estándar__
-  * Los resultados de una investigación no pueden considerarse "contribuciones genuinas" al conocimiento humano hasta que no sean verificadas ([Stodden 2009](http://dx.doi.org/10.1109/MCSE.2009.19)).
-  * Demarcación entre ciencia y no-ciencia
-
-
-![repro_spectrum](images/ciencia_magos.jpg) 
 
 
 --- 
@@ -342,6 +350,7 @@ __`Rule 3.`__ __Archive the exact versions of all external programs used__
 sessionInfo()
 ```
 
+
 <p align="center"><img src="images/sessionInfo.png" height="150" width="400"></p>
 
 
@@ -350,6 +359,7 @@ sink("sessionInfo.txt")
 sessionInfo()
 sink()
 ```
+
 <br>
 [packrat: A Dependency Management System for Projects and their R Package
 Dependencies](http://rstudio.github.io/packrat/)
@@ -372,7 +382,7 @@ __`Rule 6.`__ __For analysis that include randomness, note underlying random see
 
 ```r
 # Crea un conjunto de datos
-x <- seq(0,30, by=0.5)
+x <- seq(0, 30, by = 0.5)
 head(x)
 ```
 
@@ -386,7 +396,7 @@ sample(x, 5)
 ```
 
 ```
-## [1]  1.0 18.5 14.5 19.0 21.5
+## [1]  6.5  0.5 13.0  8.0  2.0
 ```
 
 ```r
@@ -394,8 +404,9 @@ sample(x, 5)
 ```
 
 ```
-## [1] 20.0 11.0 18.5  4.0 18.0
+## [1]  5.0 29.5 15.5  2.0  7.0
 ```
+
 
 
 --- .codefont .bigger .centrepre
@@ -420,6 +431,7 @@ sample(x, 5)
 ```
 ## [1]  8.0 11.0 16.5 26.0  5.5
 ```
+
 
 * Semilla inicial en aleatoridad (re-sampling, bootsprating, Monte-Carlo, etc)
 * `Mínimo`: Anotar los pasos del análisis que implican aleatoridad (saber donde encontraremos discrepancias)
@@ -590,6 +602,7 @@ ls -a
 .  ..  .git
 ```
 
+
 * Añadir cambios 
 
 ```{}
@@ -621,6 +634,7 @@ git commit -m "Escribo mis datos personales en archivo"
  1 file changed, 2 insertions(+)
  create mode 100644 misdatos.md
 ```
+
 
 --- bg:url(images/esquema_git.png)
 
