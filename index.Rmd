@@ -187,10 +187,42 @@ comparacion con una reg. lineal
 $\tau = 0$ : 
  
 Supongamos que tenemos un conjunto de observaciones de dos variable aleatorias, ___X___ e ___Y___: 
-$\(x_1,y_1),\
+$(x_1,y_1),(x_2,y_2),\hdots,(x_n,y_n)$
+Decimos que un par de observaviones $(x_i,y_i)$ y $(x_j,y_j)$ son concordantes si los rangos de ambos elementos concuerdan:
+* $x_i > x_j$ y $y_i > y_j$ o
+* $x_i < x_j$ y $y_i < y_j$ 
+Decimos que un par de observaciones son discordantes si: 
+* $x_i > x_j$ y $y_i < y_j$ o
+* $x_i < x_j$ y $y_i > y_j$ 
+
+El valor del estadístico $\tau$ lo calculamos como:
+$\tau=\frac{(\textup{n pares concordantes})-(\textup{n pares discordantes})}{\frac{1}{2}n(n-1)}$ 
+
+Resultados
+* If the agreement between the two rankings is perfect (i.e., the two rankings are the same) the coefficient has value 1.
+If the disagreement between the two rankings is perfect (i.e., one ranking is the reverse of the other) the coefficient has value −1.
+If X and Y are independent, then we would expect the coefficient to be approximately zero.
+
+
+
 Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint random variables X and Y respectively, such that all the values of (xi) and (yi) are unique. Any pair of observations (xi, yi) and (xj, yj) are said to be concordant if the ranks for both elements agree: that is, if both xi > xj and yi > yj or if both xi < xj and yi < yj. They are said to be discordant, if xi > xj and yi < yj or if xi < xj and yi > yj. If xi = xj or yi = yj, the pair is neither concordant nor discordant.
 
 
+El test de Mann Kendall es un test estadístico ampliamente utilizado para el análisis de tendencias en series de datos temporales que se ha utilizdo ampliamente en climatología e hidrología. 
+
+Existen varias ventajas: 
+* Es un test no paramétrico (no requiere que asumamos distribuciones en los datos)
+* Tiene una baja sensibilidad para cambios abruotos 
+
+Mann Kendall test is a statistical test widely used for the analysis of trend in climatologic
+[9] and in hydrologic time series [6]. There are two advantages of using this test. First, it
+is a non parametric test and does not require the data to be normally distributed. Second,
+the test has low sensitivity to abrupt breaks due to inhomogeneous time series [4]. Any
+data reported as non-detects are included by assigning them a common value that is
+smaller than the smallest measured value in the data set [7]. According to this test, the
+null hypothesis H0 assumes that there is no trend (the data is independent and randomly
+ordered) and this is tested against the alternative hypothesis H1, which assumes that there
+is a trend. [3]
 
 
 
@@ -200,10 +232,6 @@ Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint rand
 
 
 
-
---- 
-# Crisis de Reproducibilidad
-![fraude ciencia](images/the_economist.jpg)
 
 --- &twocol
 # Fraude científico
@@ -249,29 +277,6 @@ Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint rand
 <br>
 <br>
 <q> Research results are __replicable__ if there is sufficient information available for independent researchers to make the same findings using the same procedures </q>  
-
---- .smaller
-<br>
-<br>
-<br>
-![repro_spectrum](images/repro_spectrum.jpg) 
-
-[Peng 2011](https://dx.doi.org/10.1126/science.1213847)
-
---- .quote
-<br>
-<br>
-<br>
-<q align=right>¿Porqué ha de ser <br>__reproducible__<br> la investigación? </q>
-
---- 
-## Por la _ciencia_ 
-* __Estándar__
-  * Los resultados de una investigación no pueden considerarse "contribuciones genuinas" al conocimiento humano hasta que no sean verificadas ([Stodden 2009](http://dx.doi.org/10.1109/MCSE.2009.19)).
-  * Demarcación entre ciencia y no-ciencia
-
-
-![repro_spectrum](images/ciencia_magos.jpg) 
 
 
 --- 

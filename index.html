@@ -295,9 +295,11 @@ Falk M (2012). A First Course on Time Series Analysis - Examples with SAS. Chair
 
 <p>\(\tau = 0\) : </p>
 
-<p>Supongamos que tenemos un conjunto de observaciones de dos variable aleatorias, <strong><em>X</em></strong> e <em>Y</em> pares de datos:
-$()
-Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint random variables X and Y respectively, such that all the values of (xi) and (yi) are unique. Any pair of observations (xi, yi) and (xj, yj) are said to be concordant if the ranks for both elements agree: that is, if both xi &gt; xj and yi &gt; yj or if both xi &lt; xj and yi &lt; yj. They are said to be discordant, if xi &gt; xj and yi &lt; yj or if xi &lt; xj and yi &gt; yj. If xi = xj or yi = yj, the pair is neither concordant nor discordant.</p>
+<p>Supongamos que tenemos un conjunto de observaciones de dos variable aleatorias, <strong><em>X</em></strong> e <strong><em>Y</em></strong>: 
+\((x_1,y_1),(x_2,y_2),\hdots,(x_n,y_n)\)
+Decimos que un par de observaviones \((x_i,y_i)\) y \((x_j,y_j)\) son concordantes si los rangos de ambos elementos ...</p>
+
+<p>Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint random variables X and Y respectively, such that all the values of (xi) and (yi) are unique. Any pair of observations (xi, yi) and (xj, yj) are said to be concordant if the ranks for both elements agree: that is, if both xi &gt; xj and yi &gt; yj or if both xi &lt; xj and yi &lt; yj. They are said to be discordant, if xi &gt; xj and yi &lt; yj or if xi &lt; xj and yi &gt; yj. If xi = xj or yi = yj, the pair is neither concordant nor discordant.</p>
 
   </article>
   <!-- Presenter Notes -->
@@ -699,13 +701,13 @@ head(x)
 sample(x, 5)
 </code></pre>
 
-<pre><code>## [1] 15.0  1.5 29.0  0.0 20.0
+<pre><code>## [1]  1.0 18.5 14.5 19.0 21.5
 </code></pre>
 
 <pre><code class="r">sample(x, 5)
 </code></pre>
 
-<pre><code>## [1] 10.0 23.5  0.5  9.0  5.5
+<pre><code>## [1] 20.0 11.0 18.5  4.0 18.0
 </code></pre>
 
   </article>

@@ -152,8 +152,11 @@ comparacion con una reg. lineal
 
 $\tau = 0$ : 
  
-Supongamos que tenemos un conjunto de observaciones de dos variable aleatorias, ___X___ e _Y_ pares de datos:
-$\()
+Supongamos que tenemos un conjunto de observaciones de dos variable aleatorias, ___X___ e ___Y___: 
+$(x_1,y_1),(x_2,y_2),\hdots,(x_n,y_n)$
+Decimos que un par de observaviones $(x_i,y_i)$ y $(x_j,y_j)$ son concordantes si los rangos de ambos elementos ...
+
+
 Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint random variables X and Y respectively, such that all the values of (xi) and (yi) are unique. Any pair of observations (xi, yi) and (xj, yj) are said to be concordant if the ranks for both elements agree: that is, if both xi > xj and yi > yj or if both xi < xj and yi < yj. They are said to be discordant, if xi > xj and yi < yj or if xi < xj and yi > yj. If xi = xj or yi = yj, the pair is neither concordant nor discordant.
 
 
@@ -383,7 +386,7 @@ sample(x, 5)
 ```
 
 ```
-## [1] 15.0  1.5 29.0  0.0 20.0
+## [1]  1.0 18.5 14.5 19.0 21.5
 ```
 
 ```r
@@ -391,7 +394,7 @@ sample(x, 5)
 ```
 
 ```
-## [1] 10.0 23.5  0.5  9.0  5.5
+## [1] 20.0 11.0 18.5  4.0 18.0
 ```
 
 
