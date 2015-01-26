@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Técnicas analíticas con R</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Técnicas analíticas con R">
+  <meta name="author" content="Antonio J. Pérez-Luque">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/monokai.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/codefont.css"></link>
+<link rel=stylesheet href="./assets/css/mainapp.css"></link>
+<link rel=stylesheet href="./assets/css/mincodefont.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Técnicas analíticas con R</h1>
+    <h2>Brevísima introducción al Análisis de Series Temporales</h2>
+    <p>Antonio J. Pérez-Luque<br/>Ecoinformática. Curso 2014-2015</p>
+  </hgroup>
+  <article></article>  
+  <footer class = 'license'>
+    <a href='http://creativecommons.org/licenses/by-nc-sa/3.0/'>
+    <img width = '80px' src = 'http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png'>
+    </a>
+  </footer>
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <article data-timings="">
+    <!-- Center image on slide -->
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+
+<script type='text/javascript'>
+$(function() {
+    $("p:has(img)").addClass('centered');
+});
+</script>
+
+<style>
+em {
+  font-style: italic
+}
+strong {
+  font-weight: bold;
+}
+</style>
+
+<!-- Limit image width and height -->
+
+<style type='text/css'>
+img {
+    max-height: 560px;
+    max-width: 964px;
+}
+</style>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-2" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<br>
+<q align=right>¿Qué es una <br><strong>Serie Temporal</strong>? </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>Conjunto de observaciones registradas a intervalos regulares de tiempo. </li>
+<li>En cada instante \(\t_{i}\) la observación proviene de una variable que puede tener igual o diferente distribución</li>
+<li><p>El orden de llegada de los datos es importante</p></li>
+<li><p>Ejemplos: temperaturas, productividad del bosque a lo largo del año, cantidad de agua que lleva un río cada día, etc.  </p></li>
+<li></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-4" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<br>
+<q align=right>¿Por qué nos interesa analizar una <br><strong>Serie Temporal</strong>? </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <article data-timings="">
+    <ul>
+<li>Para comprobar la ciclidad de un fenómeno</li>
+<li>Analizar si los datos se ajustan bien a un modelo teórico</li>
+<li>Analizar fenómenos espacio-temporales (avanzado)</li>
+</ul>
+
+<iframe width="250" height="150" frameborder="0"
+  src="http://player.vimeo.com/video/104330415?title=0&amp;byline=0&amp;portrait=0" >
+</iframe>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>Evolución de un proceso ecológico en diferentes ecosistemas</h2>
+  </hgroup>
+  <article data-timings="">
+    <iframe width="250" height="150" frameborder="0"
+  src="http://player.vimeo.com/video/22945147?title=0&amp;byline=0&amp;portrait=0" >
+</iframe>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>Objetivos:</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><strong>Explicar la evolución de un fenómeno a lo largo del tiempo</strong> </p>
+
+<p><img src="figure/unnamed-chunk-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>Objetivos</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><strong>Predecir su valores en el futuro</strong></p>
+
+<p><img src="figure/unnamed-chunk-2.png" alt="plot of chunk unnamed-chunk-2"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-9" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<br>
+<q align=right><strong>Tipos</strong> de Series Temporales? </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Estacionarias</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="figure/unnamed-chunk-3.png" alt="plot of chunk unnamed-chunk-3"> </p>
+
+<ul class = "build incremental">
+<li>Los datos varían todo el tiempo alrededor del mismo <strong>valor medio</strong> y con la <strong>misma variabilidad</strong>. </li>
+<li>La relación entre las observaciones en dos momentos del tiempo diferentes
+sólo depende del número de observaciones que distan entre ambas</li>
+</ul>
+
+<p><a href="https://obsnev.es/linaria">Observatorio de Cambio Global de Sierra Nevada</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>No Estacionarias</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="figure/unnamed-chunk-4.png" alt="plot of chunk unnamed-chunk-4"> </p>
+
+<ul class = "build incremental">
+<li>La media, la varianza y/o la relación entre distantes equiespaciados <strong>cambian</strong> a lo largo del tiempo. </li>
+<li>Algunas oscilan con periodicidad regular (estacional)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>No Estacionarias</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="figure/unnamed-chunk-5.png" alt="plot of chunk unnamed-chunk-5"> </p>
+
+<ul class = "build incremental">
+<li>Tendencia (serie no estacionaria estacional con tendencia)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>No Estacionarias</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="figure/unnamed-chunk-6.png" alt="plot of chunk unnamed-chunk-6"> </p>
+
+<ul class = "build incremental">
+<li>Aumenta la variabilidad con el tiempo (serie no estacionaria con aumento de variabilidad)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <article data-timings="">
+    <p>Tutoriales 
+Falk M (2012). A First Course on Time Series Analysis - Examples with SAS. Chair of Statistics, University of Wurzburg. <a href="http://www.statistik-mathematik.uni-wuerzburg.de/wissenschaftforschung/time_series/the_book/">link</a> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Test de Mann-Kendall</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>comparacion con una reg. lineal</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Mann-Kendall test</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Es un caso especial del test de correlación de Kendall (\(\tau\))
+
+<ul>
+<li>mide la asociación entre dos variables </li>
+</ul></li>
+<li><p>Basado en el ranking relativo de los datos (no sobre los datos en sí)</p></li>
+<li><p>Hipótesis:</p>
+
+<ul>
+<li>\(\H_{0}:\) Los valores de la serie de datos son independientes </li>
+<li>\(\H_{1}:\) Existe una tendencia monotóna (no necesariamente lineal)
+ H0: Time series values are independent, identically distributed
+ HA: There is a monotonic (not necessarily linear) trend </li>
+</ul></li>
+<li><p>Se calcula un valor de un estadístico (\(\tau\)):</p></li>
+</ul>
+
+<p>\(\tau = 0\) : </p>
+
+<p>Supongamos que tenemos un conjunto de observaciones de dos variable aleatorias, <strong><em>X</em></strong> e <em>Y</em> pares de datos:
+$()
+Let (x1, y1), (x2, y2), …, (xn, yn) be a set of observations of the joint random variables X and Y respectively, such that all the values of (xi) and (yi) are unique. Any pair of observations (xi, yi) and (xj, yj) are said to be concordant if the ranks for both elements agree: that is, if both xi &gt; xj and yi &gt; yj or if both xi &lt; xj and yi &lt; yj. They are said to be discordant, if xi &gt; xj and yi &lt; yj or if xi &lt; xj and yi &gt; yj. If xi = xj or yi = yj, the pair is neither concordant nor discordant.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h1>Crisis de Reproducibilidad</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="images/the_economist.jpg" alt="fraude ciencia"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h1>Fraude científico</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><br></p>
+
+<div style='float:left;width:48%;' class='centered'>
+  <p align="center"><img src="images/koreano_science.png" height="374" width="469"></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p align="center"><img src="images/lemus_ms.png" height="300" width="450"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h1>Retracción</h1>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <p><br></p>
+
+<p align="center"><img src="images/koreano_science_ret.png" height="450" width="400"></p>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p align="center"><img src="images/lemus.png" height="600" width="400"></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote smaller" id="slide-20" style="background:;">
+  <article data-timings="">
+    <p align="center"><img src="images/metadata_michener.png" height="500" width="742"></p>
+
+<ul class = "build incremental">
+<li>La investigación no son sólo los resultados que se publican, sino que es el conjunto de programas, código, y datos utilizados para producir los resultados (Gandrud 2014)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h1>Meta-analysis on the effects of temperature on plant phenology</h1>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="images/request_opendata.png" alt="opendatarequest"></p>
+
+<p><a href="https://dx.doi.org/10.1111/j.1365-2486.2012.02693.x">Wolkovich et al. 2012</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-22" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<br>
+<q align=right>¿Qué entendemos por <br><strong>Reproducible Science</strong>? </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-23" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<q> Research results are <strong>replicable</strong> if there is sufficient information available for independent researchers to make the same findings using the same procedures </q>  </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="smaller" id="slide-24" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<br>
+<img src="images/repro_spectrum.jpg" alt="repro_spectrum"> </p>
+
+<p><a href="https://dx.doi.org/10.1126/science.1213847">Peng 2011</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-25" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<br>
+<q align=right>¿Porqué ha de ser <br><strong>reproducible</strong><br> la investigación? </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>Por la <em>ciencia</em></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><strong>Estándar</strong>
+
+<ul>
+<li>Los resultados de una investigación no pueden considerarse &quot;contribuciones genuinas&quot; al conocimiento humano hasta que no sean verificadas (<a href="http://dx.doi.org/10.1109/MCSE.2009.19">Stodden 2009</a>).</li>
+<li>Demarcación entre ciencia y no-ciencia</li>
+</ul></li>
+</ul>
+
+<p><img src="images/ciencia_magos.jpg" alt="repro_spectrum"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Por la <em>ciencia</em></h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><strong>Evitar duplicación de esfuerzos</strong>
+
+<ul>
+<li>Disminuir la cantidad de tiempo empleado para colectar datos, manipular datos, etc.</li>
+<li>Ayuda a avanzar en la generación de nuevo conocimiento (<a href="https://dx.doi.org/10.1111/j.1365-2486.2012.02693.x">Wolkovich et al. 2012</a>)</li>
+</ul></li>
+</ul>
+
+<p align="center"><img src="images/opendata.png" height="400" width="400"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>Por los <em>investigadores</em>  (por ti)</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li><strong>Mejorar Habitos de trabajo</strong>
+
+<ul>
+<li>Aumentar la facilidad para detectar errores (documentar código)</li>
+<li>Accesibilidad de los pasos llevados a cabo (re-usabilidad)</li>
+<li>Efectividad (evitar duplicidad de esfuerzo)</li>
+</ul></li>
+<li><p><strong>Mejorar Trabajo en equipo</strong></p>
+
+<ul>
+<li>Implementar la reproducibilidad de un proyecto facilita a tus colaboradores (presentes o futuros) ejecutar parte del mismo</li>
+</ul></li>
+<li><p><strong>Facilitar los cambios</strong></p>
+
+<ul>
+<li>Reproducir tus resultados en el futuro próximo (re-análisis, cambios en figuras, etc.)</li>
+</ul></li>
+<li><p><strong>Mayor impacto de nuesta investigación</strong></p>
+
+<ul>
+<li>La investigación que es reproducible contiene mas información (código, acceso a los datos, etc) y por tanto, mas razones para ser usada (y citada, i.e. <a href="http://dx.doi.org/10.1371/journal.pone.0000308">Piwowar et al. 2007</a>)</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="smaller" id="slide-29" style="background:;">
+  <article data-timings="">
+    <p><strong>Aplicar técnicas de reproducibilidad (o al menos los principios) puede hacer que tu investigación sea mas efectiva y mas fácil</strong>
+<br>
+<br></p>
+
+<p><img src="images/metodo_geek.png" alt="metodo_geek"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-30" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<br>
+<q align=right>¿Cómo hacer que nuestra investigación <br> sea mas <strong>reproducible</strong>? </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h2>Flujo de Trabajo Científico</h2>
+  </hgroup>
+  <article data-timings="">
+    <h1>The old-(<em>traditional</em>) way</h1>
+
+<p><img src="images/workflow_cycle/workflow.png" alt="metodo"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <hgroup>
+    <h2>Comunicamos los resultados</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul class = "build incremental">
+<li>¿Qué análisis has llevado a cabo para generar una figura? ¿Cómo has llevado a cabo el análisis de las medias? ¿Has tenido en cuenta la correlación entre las variables? ... </li>
+</ul>
+
+<p><br>  </p>
+
+<ul class = "build incremental">
+<li>¿Qué datos has utilizado? ¿Has llevado a cabo un filtro previo de los datos? ¿de qué tipo? ¿Has utilizado valores brutos o valores agregados? ...</li>
+</ul>
+
+<p><br>  </p>
+
+<ul class = "build incremental">
+<li>¿Has probado a llevar a cabo el análisis utilizando la media armónica en vez de la media aritmética? ¿Qué resultados obtendríamos si agregamos los valores por meses en vez de por estaciones? ... </li>
+</ul>
+
+<p><br>  </p>
+
+<ul class = "build incremental">
+<li>¿Podrías incluir en la figura además unas barras de error? ¿Podrías incluir en la tabla los I.C. al 99% en vez de al 95%? </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-33" style="background:;">
+  <article data-timings="">
+    <p>Este flujo de trabajo está <strong>roto</strong> </p>
+
+<p><br></p>
+
+<p align="center"><img src="images/workflow_cycle/workflow_roto.png" height="500" width="900"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-34" style="background:;">
+  <hgroup>
+    <h2>Consejos prácticos</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><br>
+<strong>1. Document everything!<br><br></strong>
+<strong>2. Everything is a (text) file<br><br></strong>
+<strong>3. All files should be human readable<br><br></strong> 
+<strong>4. Explicity tie your files together<br><br></strong>
+<strong>5. Have a plan to organize, store, and make our files available</strong></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
+  <hgroup>
+    <h2>The big picture</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="images/big_picture.png" alt="big_picture"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-36" style="background:;">
+  <hgroup>
+    <h3>Algunas reglas sencillas (<a href="https://dx.doi.org/10.1371/journal.pcbi.1003285">Sandve et al. 2013</a>)</h3>
+  </hgroup>
+  <article data-timings="">
+    <p><strong><code>Rule 1.</code></strong> <strong>For every result, keep track of how it was produced</strong> </p>
+
+<ul>
+<li>Si un resultado puede ser de potencial interés, mantén un registro de como se ha producido. </li>
+<li><code>Mínimo</code>: registrar detalles suficientes sobre los programas, parámetros y procedimientos manuales para ser capaz (al menos tú) de reproducir el resultado cuando pase un tiempo</li>
+</ul>
+
+<p><strong><code>Rule 2.</code></strong> <strong>Avoid manual data manipulation steps</strong> </p>
+
+<ul>
+<li>Los procedimientos manuales son <strong>ineficientes</strong>, propensos a los <strong>errores</strong> y difíciles (sino imposibles) de reproducir. </li>
+<li>Sustituir modificación manual de archivos por uso de comandos o pequeños scripts (mejor comprensión + track errores + fácilmente reproducibles (1-click))</li>
+<li><code>Mínimo</code>: Si la utilización de operaciones manuales no pueden evitarse en tu análisis, anota al menos los archivos que son modificados o movidos y para que propósito</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont centrepre bigger" id="slide-37" style="background:;">
+  <article data-timings="">
+    <p><strong><code>Rule 3.</code></strong> <strong>Archive the exact versions of all external programs used</strong> </p>
+
+<ul>
+<li>Programas y versiones </li>
+<li><code>Mínimo</code>: Anotar nombres y versiones de los programas utilizados (metadatos) </li>
+</ul>
+
+<pre><code class="r">sessionInfo()
+</code></pre>
+
+<p align="center"><img src="images/sessionInfo.png" height="150" width="400"></p>
+
+<pre><code class="r">sink(&quot;sessionInfo.txt&quot;)
+sessionInfo()
+sink()
+</code></pre>
+
+<p><br>
+<a href="http://rstudio.github.io/packrat/">packrat: A Dependency Management System for Projects and their R Package
+Dependencies</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont centrepre bigger" id="slide-38" style="background:;">
+  <article data-timings="">
+    <p><strong><code>Rule 4.</code></strong> <strong>Version Control all custom scripts</strong> </p>
+
+<ul>
+<li>Registrar los cambios realizados en los scripts que utilizamos </li>
+<li><code>Mínimo</code>: Archivar copias de los scripts cada vez que hagamos cambios en ellos, para mantener un registro exahustivo de los cambios que hemos realizado en ellos. </li>
+</ul>
+
+<p><strong><code>Rule 5.</code></strong> <strong>Record all intermediate results, when possible in standardized formats</strong></p>
+
+<ul>
+<li>Tener acceso a resultados intermedios es de gran valor: 
+
+<ul>
+<li>Un vistazo rápido de resultados intermedios puede servirnos para revelar discrepancias, falsas asunciones, etc. que no podemos ver en los resultados finales. </li>
+<li>Parámetros arbitrarios en pasos intermedios</li>
+<li><code>Mínimo</code>: Guardar archivos y resultados intermedios (siempre que el espacio no nos limite)</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont bigger centrepre" id="slide-39" style="background:;">
+  <article data-timings="">
+    <p><strong><code>Rule 6.</code></strong> <strong>For analysis that include randomness, note underlying random seeds</strong></p>
+
+<ul>
+<li>No reproducible. </li>
+</ul>
+
+<pre><code class="r"># Crea un conjunto de datos
+x &lt;- seq(0,30, by=0.5)
+head(x)
+</code></pre>
+
+<pre><code>## [1] 0.0 0.5 1.0 1.5 2.0 2.5
+</code></pre>
+
+<pre><code class="r"># Toma una muestra de 5 individuos
+sample(x, 5)
+</code></pre>
+
+<pre><code>## [1] 15.0  1.5 29.0  0.0 20.0
+</code></pre>
+
+<pre><code class="r">sample(x, 5)
+</code></pre>
+
+<pre><code>## [1] 10.0 23.5  0.5  9.0  5.5
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont bigger centrepre" id="slide-40" style="background:;">
+  <article data-timings="">
+    <p><strong><code>Rule 6.</code></strong> <strong>For analysis that include randomness, note underlying random seeds</strong></p>
+
+<ul>
+<li>Reproducible. </li>
+</ul>
+
+<pre><code class="r">set.seed(1)
+sample(x, 5)
+</code></pre>
+
+<pre><code>## [1]  8.0 11.0 16.5 26.0  5.5
+</code></pre>
+
+<pre><code class="r"># Repite la operaci?n
+set.seed(1)
+sample(x, 5)
+</code></pre>
+
+<pre><code>## [1]  8.0 11.0 16.5 26.0  5.5
+</code></pre>
+
+<ul>
+<li>Semilla inicial en aleatoridad (re-sampling, bootsprating, Monte-Carlo, etc)</li>
+<li><code>Mínimo</code>: Anotar los pasos del análisis que implican aleatoridad (saber donde encontraremos discrepancias)</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-41" style="background:;">
+  <article data-timings="">
+    <p><strong><code>Rule 7.</code></strong> <strong>Always store raw dat behind plots</strong> </p>
+
+<ul>
+<li>Capacidad de regenerar figuras de forma sencilla</li>
+</ul>
+
+<p><img src="images/uso.jpg" alt="usos"></p>
+
+<ul>
+<li>Realizar gráficos en R (script), nos permite regenerarlos en 1 solo paso</li>
+<li><code>Mínimo</code>: Anotar que datos forman parte de la base de una figura y como podemos generar esos datos. </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-42" style="background:;">
+  <hgroup>
+    <h2>Algunos recursos</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p><a href="http://ropensci.github.io/reproducibility-guide/contributors/">Reproducibility Guide (ROpenSci and others contributors)</a></p></li>
+<li><p><a href="http://kbroman.org/steps2rr/">Initial steps toward reproducible research (Karl Broman)</a></p></li>
+</ul>
+
+<p align="center"><img src="images/reproducible_plan.png" height="410" width="522"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-43" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<br>
+<q align=right>¿Cómo generar informes <br><strong>reproducibles</strong>? </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont centrepre bigger quote" id="slide-44" style="background:;">
+  <hgroup>
+    <h2>Markdown</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Es un lenguaje de marcas sencillo con una sintáxis de texto plano </li>
+<li>Permite agregar formatos a textos de una forma sencilla </li>
+<li class='md</li>'><li>Tutoriales:
+
+<ul>
+<li><a href="http://markdowntutorial.com/">Markdowntutorial</a></li>
+</ul></li>
+</ul>
+
+<h2>R + Markdown = Rmarkdown</h2>
+
+<ul>
+<li>Permite reproducibilidad total</li>
+<li>Dinámico (1 click)</li>
+<li>Permite generar informes, documentos, presentaciones, etc. <a href="https://github.com/karthik/markdown_science">ejemplo artículo</a></li>
+<li>Tutoriales
+
+<ul>
+<li><a href="http://rmarkdown.rstudio.com/">R Markdown — Dynamic Documents for R</a></li>
+<li><a href="http://pakillo.github.io/Rmarkdown_tutorial/">Reproducible Research with Rmarkdown</a> </li>
+<li><a href="http://www.crcpress.com/product/isbn/9781466572843">Reproducible Research with R and RStudio</a> </li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-45" style="background:;">
+  <hgroup>
+    <h2>Ejemplos</h2>
+  </hgroup>
+  <article data-timings="">
+    <p align="center"><img src="images/rmarkdown_rstudio.png" height="273" width="489"></p>
+
+<ul>
+<li><a href="https://github.com/macroecology/Drought_CA/blob/master/pdsi/averagePdsi/average_pdsi_year.md">Evaluación de la sequía en los últimos 110 años en California</a></li>
+<li><a href="https://github.com/ajpelu/ajpeluR/blob/master/prueba/trend_past_climate.md">Análisis de variables climáticas en el periodo 1960-2010 en Sierra Nevada</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="quote" id="slide-46" style="background:;">
+  <article data-timings="">
+    <p><br>
+<br>
+<br>
+<q align=right>¿Cómo gestionamos las <br><strong>versiones</strong>? </q></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-47" style="background:;">
+  <article data-timings="">
+    <p><img src="images/final_doc.png" alt="final_doc">
+<br>
+<a href="http://phdcomics.com/">phdcomic</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-48" style="background:;">
+  <article data-timings="">
+    <p><img src="images/astorytold.png" alt="final_doc">
+<br>
+<a href="http://phdcomics.com/">phdcomic</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-49" style="background:;">
+  <hgroup>
+    <h2>¿Qué es el control de versiones?</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>El <strong>control de versiones</strong> es un sistema que registra los cambios realizados sobre un archivo o conjunto de archivos a lo largo del tiempo, de modo que podamos recuperar versiones específicas más adelante</p>
+
+<ul>
+<li>Se puede utilizar sobre cualquier archivo. </li>
+<li>Permite: 
+
+<ul>
+<li>Revertir archivos (proyecto) a un estado anterior</li>
+<li>Comparar cambios a lo largo del tiempo</li>
+</ul></li>
+<li>Facilita la identificación de errores </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-50" style="background:;">
+  <hgroup>
+    <h2>Lenguajes para el control de versiones</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><br>
+<br></p>
+
+<p align="center"><img src="images/git_logo.png" height="251" width="600"></p>
+
+<p><br><br>
+<a href="http://git-scm.com/book/en/v2">ProGit book</a> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-51" style="background:;">
+  <hgroup>
+    <h2>GitHub</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <ul>
+<li>Un website donde alojar repositorios </li>
+<li>Interfaz para explorar repositorios</li>
+<li>Permite colaborar de una forma más eficaz (programadores):
+
+<ul>
+<li>Compartir repositorio</li>
+<li>Ver cambios</li>
+<li>Corregir errores </li>
+<li>Discutir y Revisar cambios</li>
+</ul></li>
+</ul>
+
+</div>
+<div style='float:right;width:48%;'>
+  <p align="center"><img src="images/github_logo.png" height="300" width="400"></p>
+
+<p><br>
+<a href="https://github.com/">https://github.com/</a></p>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-52" style="background:;">
+  <article data-timings="">
+    <p><img src="images/github_view.png" alt="github view"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-53" style="background:;">
+  <article data-timings="">
+    <p><img src="images/github_commit_log.png" alt="github log"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-54" style="background:;">
+  <article data-timings="">
+    <p><img src="images/github_example.png" alt="github example"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-55" style="background:;">
+  <hgroup>
+    <h2>Un sencillo tutorial sobre Git</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Recursos:</p>
+
+<ul>
+<li><a href="https://try.github.io/levels/1/challenges/1">Interactive Tutorial Git (CodeSchool)</a></li>
+<li><a href="http://rogerdudler.github.io/git-guide/index.es.html">Git - the simple guide (Roger Dudler)</a></li>
+<li><a href="http://r-pkgs.had.co.nz/git.html">Git and GitHub (Hadley Wickham)</a></li>
+<li><a href="https://www.biostat.wisc.edu/%7Ekbroman/talks/GitPrimer.pdf">A brief introduction to git &amp; GitHub (Karl Broman &amp; Samuel G. Younkin)</a></li>
+<li><a href="http://jonlefcheck.net/2013/11/04/a-basic-tutorial-to-version-control-using-git/">A basic tutorial to version control using git (Jon Lefcheck)</a></li>
+<li><a href="http://kbroman.org/github_tutorial/">Git/Github guide a minimal tutorial (Karl Broman)</a></li>
+<li><a href="https://www.atlassian.com/git/tutorials/setting-up-a-repository">Getting Git Right (Atlassian)</a> </li>
+<li><a href="https://gist.github.com/Pakillo/63c15c700c9c76fe8032">Recopilación de tutoriales (F. Rodríguez-Sánchez)</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont centrepre bigger quote" id="slide-56" style="background:;">
+  <hgroup>
+    <h2>Crear un repositorio nuevo</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Crea un directorio nuevo y ábrelo</li>
+</ul>
+
+<pre><code>mkdir &lt;nombre_directorio&gt;
+</code></pre>
+
+<pre><code>mkdir datos
+cd datos
+</code></pre>
+
+<ul>
+<li>Para <strong>iniciar un repositorio</strong> utilizamos el comando</li>
+</ul>
+
+<pre><code>git init
+</code></pre>
+
+<p><br>
+<br></p>
+
+<p><a href="http://overapi.com/linux/">Ayuda sobre comandos</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont centrepre bigger quote" id="slide-57" style="background:;">
+  <hgroup>
+    <h2>Añadir cambios</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Inspeccionar el directorio</li>
+</ul>
+
+<pre><code>ls -a 
+</code></pre>
+
+<pre><code class="r">.  ..  .git
+</code></pre>
+
+<ul>
+<li>Añadir cambios </li>
+</ul>
+
+<pre><code>git add &lt;nombre_archivo&gt;
+</code></pre>
+
+<pre><code>git add misdatos.md
+</code></pre>
+
+<ul>
+<li>Si quiero añadir todos los archivos </li>
+</ul>
+
+<pre><code>git add . 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont bigger" id="slide-58" style="background:;">
+  <hgroup>
+    <h2>Registrar cambios</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>git commit -m &quot;Commit message&quot;&quot;
+</code></pre>
+
+<pre><code>git commit -m &quot;Escribo mis datos personales en archivo&quot;
+</code></pre>
+
+<pre><code class="r">[master (root-commit) 71fe224] Escribo mis datos personales en archivo
+ 1 file changed, 2 insertions(+)
+ create mode 100644 misdatos.md
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-59" style="background:url(images/esquema_git.png);">
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="minicodefont bigger" id="slide-60" style="background:;">
+  <hgroup>
+    <h2>Enviar cambios</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Nuestros cambios están en el <strong><code>HEAD</code></strong> (copia local)</p>
+
+<ul>
+<li>Queremos <strong><code>enviar</code></strong> los cambios a un repositorio remoto:
+
+<ul>
+<li>Conectar con un repositorio remoto (¡ojo necesitamos crear uno o clonarlo!)</li>
+</ul></li>
+</ul>
+
+<pre><code>git remote add origin &lt;server&gt;
+</code></pre>
+
+<pre><code>git remote add origin https://github.com/ajpelu/ecoinformatica_2014_2015_ajpelu.git
+</code></pre>
+
+<ul>
+<li>Para enviar cambios (una vez conectados) a un repositorio remoto </li>
+</ul>
+
+<pre><code>git push origin master
+</code></pre>
+
+<ul>
+<li>Nos pedirá usuario y contraseña. </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-61" style="background:;">
+  <hgroup>
+    <h2>Reto 4_1</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Crear una cuenta en <a href="https://github.com">github</a> </p></li>
+<li><p>Crear un repositorio llamado <strong><code>ecoinfo_2014_2015_reto_4_1</code></strong> </p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont bigger quote" id="slide-62" style="background:;">
+  <hgroup>
+    <h2>Clonar un directorio</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Importante para reproducibilidad</li>
+<li>Colaboración </li>
+<li>Repositorio remoto (<code>GitHub</code>)</li>
+</ul>
+
+<p>comando: </p>
+
+<pre><code>git clone username@host:/path/to/repository
+</code></pre>
+
+<p><br>
+ejemplo:</p>
+
+<pre><code>git clone git@github.com:iecolab/ecoinformatica_2014_2015_ajpelu.git 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="codefont centrepre bigger quote" id="slide-63" style="background:;">
+  <hgroup>
+    <h2>Actualizar, fusionar</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Si queremos actualizar un repositorio local al último cambio </li>
+</ul>
+
+<pre><code>git pull  
+</code></pre>
+
+<pre><code>git pull origin master 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-64" style="background:;">
+  <hgroup>
+    <h2>Reto 4_2</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Clonar el repositorio <a href="https://github.com/iEcolab/ecoinformatica_2014_2015">GitHub</a> de la asignatura  </p></li>
+<li><p>Subir todos tus retos del resto de la asignatura a su carpeta correspondiente</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-65" style="background:;">
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="smaller" id="slide-66" style="background:;">
+  <hgroup>
+    <h1>References and Resources</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Chacon S &amp; Straub (2014) ProGit book. Apress <a href="http://git-scm.com/book/en/v2">pdf</a> </p></li>
+<li><p>FitzJohn R, Pennell M, Zanne A and Cornwell W (2014) Reproducible research is still a challenge. <a href="http://ropensci.org/blog/2014/06/09/reproducibility/">link</a> </p></li>
+<li><p>Gandrud C (2014) Reproducible research with r and rstudio. R Series. Chapman &amp; Hall/CRC. </p></li>
+<li><p>King G (1995) Replication, replication. PS: Political Science and Politics, 28(3): 444 - 452. doi:  <a href="http://dx.doi.org/10.2307/420301">10.2307/420301</a></p></li>
+<li><p>Michener WK, Brunt JW, Helly JJ, Kirchner TB, Stafford SG (1997). Nongeospatial metadata for the ecological sciences. Ecological Applications, 7(1): 330?342. <a href="http://www.esajournals.org/doi/full/10.1890/1051-0761%281997%29007%5B0330%3ANMFTES%5D2.0.CO%3B2">doi</a></p></li>
+<li><p>Peng RD (2011) Reproducible research in computational science. Science, 334: 1226 - 1227. doi: <a href="https://dx.doi.org/10.1126/science.1213847">10.1126/science.1213847</a></p></li>
+<li><p>Piwowar HA, Day RS, Fridsma DB (2007) Sharing detailed research data is associated with increased citation rate. PLoS ONE 2(3): e308. doi: <a href="http://dx.doi.org/10.1371/journal.pone.0000308">10.1371/journal.pone.0000308</a></p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="smaller" id="slide-67" style="background:;">
+  <hgroup>
+    <h1>References and Resources</h1>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li><p>Rodriguez-Sánchez F (2014) Reproducible Research with Rmarkdown. Data management, analysis, and paper writing all-in-one. <a href="http://pakillo.github.io/Rmarkdown_tutorial/">slides</a></p></li>
+<li><p>Rodriguez-Sánchez F (2014) Reproducible Science with Rmarkdown <a href="Reproducible%20Science%20with%20Rmarkdown">slides</a></p></li>
+<li><p>Sandve GK, Nekrutenko A, Taylor J, Hovig E (2013) Ten Simple Rules for Reproducible Computational Research. PLoS Comput Biol 9(10): e1003285. doi: <a href="https://dx.doi.org/10.1371/journal.pcbi.1003285">10.1371/journal.pcbi.1003285</a></p></li>
+<li><p>Stodden V (2009) The legal framework for reproducible scientific research. Computing in Science &amp; Engineering, 11(1): 35 - 40. doi: <a href="http://dx.doi.org/10.1109/MCSE.2009.19">10.1109/MCSE.2009.19</a></p></li>
+<li><p>Wolkovich EM, Regetz J &amp; O&#39;Connor MI (2012) Advances in global change research require open science at the individual-level. Global Change Biology, 18, 2102?2110, doi: <a href="https://dx.doi.org/10.1111/j.1365-2486.2012.02693.x">10.1111/j.1365-2486.2012.02693.x</a></p></li>
+<li><p>Reproducibility in Science. A Guide to enhancing reproducibility in scientific results and writing. <a href="http://ropensci.github.io/reproducibility-guide/">R-OpenSci et al</a>  </p></li>
+<li><p><a href="https://coggle.it/diagram/548607a4d215ff3b06948849/0353189d659223de746d754b8d10bca50186a23b2c5bc183a7e195ea4efa2944">Reproducible Science Curriculum</a></p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-68" style="background:;">
+  <article data-timings="">
+    <p><img src="images/end.png" alt=""></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title=''>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title=''>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title=''>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title=''>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title=''>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Evolución de un proceso ecológico en diferentes ecosistemas'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Objetivos:'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Objetivos'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title=''>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Estacionarias'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='No Estacionarias'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='No Estacionarias'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='No Estacionarias'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title=''>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Test de Mann-Kendall'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Mann-Kendall test'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Crisis de Reproducibilidad'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Fraude científico'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Retracción'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title=''>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Meta-analysis on the effects of temperature on plant phenology'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title=''>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title=''>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title=''>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title=''>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='Por la <em>ciencia</em>'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Por la <em>ciencia</em>'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Por los <em>investigadores</em>  (por ti)'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title=''>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title=''>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Flujo de Trabajo Científico'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Comunicamos los resultados'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title=''>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='Consejos prácticos'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='The big picture'>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='Algunas reglas sencillas (<a href="https://dx.doi.org/10.1371/journal.pcbi.1003285">Sandve et al. 2013</a>)'>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title=''>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title=''>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title=''>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title=''>
+         40
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=41 title=''>
+         41
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=42 title='Algunos recursos'>
+         42
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=43 title=''>
+         43
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=44 title='Markdown'>
+         44
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=45 title='Ejemplos'>
+         45
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=46 title=''>
+         46
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=47 title=''>
+         47
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=48 title=''>
+         48
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=49 title='¿Qué es el control de versiones?'>
+         49
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=50 title='Lenguajes para el control de versiones'>
+         50
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=51 title='GitHub'>
+         51
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=52 title=''>
+         52
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=53 title=''>
+         53
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=54 title=''>
+         54
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=55 title='Un sencillo tutorial sobre Git'>
+         55
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=56 title='Crear un repositorio nuevo'>
+         56
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=57 title='Añadir cambios'>
+         57
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=58 title='Registrar cambios'>
+         58
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=59 title=''>
+         59
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=60 title='Enviar cambios'>
+         60
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=61 title='Reto 4_1'>
+         61
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=62 title='Clonar un directorio'>
+         62
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=63 title='Actualizar, fusionar'>
+         63
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=64 title='Reto 4_2'>
+         64
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=65 title=''>
+         65
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=66 title='References and Resources'>
+         66
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=67 title='References and Resources'>
+         67
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=68 title=''>
+         68
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
